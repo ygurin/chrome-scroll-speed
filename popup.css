@@ -1,5 +1,6 @@
 body {
     margin: 0;
+    min-width: 250px;
 }
 
 h3 {
@@ -10,14 +11,53 @@ h3 {
     padding: 0.7em 1em;
 }
 
-input {
-    display: block;
-}
-
 .padded {
     padding: 15px;
 }
 
-.align-center {
-    text-align: center;
+.setting-group {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.setting-group:last-child {
+    margin-bottom: 0;
+}
+
+.setting-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.setting-header input[type="checkbox"] {
+    margin: 0 8px 0 0;
+    cursor: pointer;
+}
+
+.setting-header label {
+    cursor: pointer;
+    user-select: none;
+}
+
+.setting-input {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: 24px;
+}
+
+.setting-input label {
+    min-width: 50px;
+}
+
+.setting-input input[type="number"] {
+    flex: 1;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
 }

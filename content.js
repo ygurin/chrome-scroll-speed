@@ -1,17 +1,24 @@
 'use strict';
 
+// Settings with defaults
+let enabled = true;
 let scrollFactor = 1;
 
-chrome.storage.sync.get(function (items) {
-    if (items['scrollFactor'] !== undefined) {
-        scrollFactor = items['scrollFactor'];
-    }
-})
+// Load settings from storage
+chrome.storage.sync.get({enabled: true, scrollFactor: 1}, function (items) {
+    enabled = items.enabled;
+    scrollFactor = items.scrollFactor;
+});
 
 function wheel(event) {
     const target = event.target;
 
     if (event.defaultPrevented || event.ctrlKey) {
+        return true;
+    }
+
+    // If not enabled, use default scroll behavior
+    if (!enabled) {
         return true;
     }
 
@@ -121,8 +128,10 @@ function getFrameByEvent(source) {
 }
 
 function chromeMessage(message) {
-    if (message.scrollFactor) {
-        scrollFactor = message.scrollFactor
+    // Update settings when received from popup
+    if (message.CSS === 'ChangeScrollSpeed') {
+        if (message.enabled !== undefined) enabled = message.enabled;
+        if (message.scrollFactor !== undefined) scrollFactor = message.scrollFactor;
     }
 }
 

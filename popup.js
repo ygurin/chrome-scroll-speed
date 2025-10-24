@@ -1,27 +1,50 @@
-const inputScrollFactor = document.getElementById('scrollFactor');
+// Get references to input elements
+const enabledCheckbox = document.getElementById('enabled');
+const scrollFactorInput = document.getElementById('scrollFactor');
 
-chrome.storage.sync.get(function (items) {
-    if (items['scrollFactor'] !== undefined) {
-        inputScrollFactor.value = items['scrollFactor'];
-    }
-})
+// Default settings
+const defaults = {
+    enabled: true,
+    scrollFactor: 1
+};
 
-function updateScrollFactor() {
-    const factor = parseFloat(inputScrollFactor.value);
+// Load saved settings
+chrome.storage.sync.get(defaults, function (items) {
+    enabledCheckbox.checked = items.enabled;
+    scrollFactorInput.value = items.scrollFactor;
+});
 
-    if (factor < 0 || factor > 1000) {
+// Update settings and notify content script
+function updateSettings() {
+    const scrollFactor = parseFloat(scrollFactorInput.value);
+
+    // Validate input
+    if (scrollFactor < 0 || scrollFactor > 1000) {
         return;
     }
 
-    chrome.storage.sync.set({'scrollFactor': factor});
+    const settings = {
+        enabled: enabledCheckbox.checked,
+        scrollFactor: scrollFactor
+    };
 
+    // Save to storage
+    chrome.storage.sync.set(settings);
+
+    // Send to active tab
     chrome.tabs.query({ active: true, windowId: chrome.windows.WINDOW_ID_CURRENT }, function(tabs) {
-        console.log(tabs);
-        chrome.tabs.sendMessage(tabs[0].id, {scrollFactor: factor, CSS: 'ChangeScrollSpeed'});
+        if (tabs[0]) {
+            chrome.tabs.sendMessage(tabs[0].id, {
+                ...settings,
+                CSS: 'ChangeScrollSpeed'
+            });
+        }
     });
 }
 
-inputScrollFactor.addEventListener('change', updateScrollFactor);
-inputScrollFactor.addEventListener('keyup', updateScrollFactor);
+// Add event listeners
+enabledCheckbox.addEventListener('change', updateSettings);
+scrollFactorInput.addEventListener('change', updateSettings);
+scrollFactorInput.addEventListener('keyup', updateSettings);
 
 
