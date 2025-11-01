@@ -55,7 +55,12 @@ function wheel(event) {
         return true;
     }
 
-    element.scrollBy(deltaX * scrollFactor, deltaY * scrollFactor);
+    // Apply scroll with instant behavior to avoid smooth scroll interference
+    element.scrollBy({
+        left: deltaX * scrollFactor,
+        top: deltaY * scrollFactor,
+        behavior: 'instant'
+    });
 
     if (event.preventDefault) {
         event.preventDefault();
