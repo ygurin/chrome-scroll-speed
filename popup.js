@@ -31,12 +31,14 @@ function updateSettings() {
     // Save to storage
     chrome.storage.sync.set(settings);
 
-    // Send to active tab
+    // Send to active tab (ignore errors for pages without content script)
     chrome.tabs.query({ active: true, windowId: chrome.windows.WINDOW_ID_CURRENT }, function(tabs) {
         if (tabs[0]) {
             chrome.tabs.sendMessage(tabs[0].id, {
                 ...settings,
                 CSS: 'ChangeScrollSpeed'
+            }).catch(() => {
+                // Silently ignore - content script not available on this page
             });
         }
     });
