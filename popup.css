@@ -1,6 +1,8 @@
 body {
     margin: 0;
     min-width: 250px;
+    background-color: #ffffff;
+    color: #000000;
 }
 
 h3 {
@@ -21,6 +23,29 @@ h3 {
     border: 1px solid #ddd;
     border-radius: 5px;
     background-color: #f9f9f9;
+}
+
+/* Dark theme */
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #202124;
+        color: #e8eaed;
+    }
+
+    h3 {
+        background-color: #1a73e8;
+    }
+
+    .setting-group {
+        background-color: #292a2d;
+        border-color: #5f6368;
+    }
+
+    .setting-input input[type="number"] {
+        background-color: #202124;
+        color: #e8eaed;
+        border-color: #5f6368;
+    }
 }
 
 .setting-group:last-child {
