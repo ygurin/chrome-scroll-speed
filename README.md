@@ -12,3 +12,7 @@ Changes:
 
 * Added enable/disable toggle (improves usability)
 * Improved settings UI
+
+<p align="center">
+  <img src="screenshot.png" alt="Extension Popup" width="300">
+</p>
