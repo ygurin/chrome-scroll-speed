@@ -25,26 +25,25 @@ h3 {
     background-color: #f9f9f9;
 }
 
-/* Dark theme */
 @media (prefers-color-scheme: dark) {
     body {
-        background-color: #202124;
-        color: #e8eaed;
+        background-color: #383838;
+        color: #ffffff;
     }
 
     h3 {
-        background-color: #1a73e8;
+        background-color: #3584e4;
     }
 
     .setting-group {
-        background-color: #292a2d;
-        border-color: #5f6368;
+        background-color: #464646;
+        border-color: #77767b;
     }
 
     .setting-input input[type="number"] {
-        background-color: #202124;
-        color: #e8eaed;
-        border-color: #5f6368;
+        background-color: #3d3d3d;
+        color: #ffffff;
+        border-color: #77767b;
     }
 }
 
