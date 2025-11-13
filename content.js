@@ -147,3 +147,15 @@ el.addEventListener(wheelEvent, wheel, {passive: false})
 window.addEventListener('message', message);
 
 chrome.runtime.onMessage.addListener(chromeMessage);
+
+// Listen for storage changes to update settings in real-time
+chrome.storage.onChanged.addListener(function(changes, areaName) {
+    if (areaName === 'sync') {
+        if (changes.enabled !== undefined) {
+            enabled = changes.enabled.newValue;
+        }
+        if (changes.scrollFactor !== undefined) {
+            scrollFactor = changes.scrollFactor.newValue;
+        }
+    }
+});
