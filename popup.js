@@ -1,6 +1,8 @@
 // Get references to input elements
 const enabledCheckbox = document.getElementById('enabled');
 const scrollFactorInput = document.getElementById('scrollFactor');
+const shortcutDisplay = document.getElementById('shortcutDisplay');
+const configureShortcutBtn = document.getElementById('configureShortcut');
 
 // Default settings
 const defaults = {
@@ -48,5 +50,32 @@ function updateSettings() {
 enabledCheckbox.addEventListener('change', updateSettings);
 scrollFactorInput.addEventListener('change', updateSettings);
 scrollFactorInput.addEventListener('keyup', updateSettings);
+
+// Listen for storage changes (e.g., from keyboard shortcut)
+chrome.storage.onChanged.addListener(function(changes, areaName) {
+    if (areaName === 'sync') {
+        if (changes.enabled !== undefined) {
+            enabledCheckbox.checked = changes.enabled.newValue;
+        }
+        if (changes.scrollFactor !== undefined) {
+            scrollFactorInput.value = changes.scrollFactor.newValue;
+        }
+    }
+});
+
+// Load and display the current keyboard shortcut
+chrome.commands.getAll(function(commands) {
+    const toggleCommand = commands.find(cmd => cmd.name === 'toggle-scroll-speed');
+    if (toggleCommand && toggleCommand.shortcut) {
+        shortcutDisplay.textContent = `Current: ${toggleCommand.shortcut}`;
+    } else {
+        shortcutDisplay.textContent = 'No shortcut configured';
+    }
+});
+
+// Open Chrome's shortcuts configuration page
+configureShortcutBtn.addEventListener('click', function() {
+    chrome.tabs.create({ url: 'chrome://extensions/shortcuts' });
+});
 
 

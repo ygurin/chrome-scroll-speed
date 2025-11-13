@@ -12,6 +12,18 @@
   "action": {
     "default_popup": "popup.html"
   },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "commands": {
+    "toggle-scroll-speed": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+S",
+        "mac": "Command+Shift+S"
+      },
+      "description": "Toggle custom scroll speed on/off"
+    }
+  },
   "content_scripts": [
     {
       "all_frames": true,
