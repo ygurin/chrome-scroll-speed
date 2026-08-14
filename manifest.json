@@ -33,7 +33,8 @@
       "matches": [
         "http://*/*",
         "https://*/*",
-        "ftp://*/*"
+        "ftp://*/*",
+        "file://*/*"
       ],
       "exclude_globs": [
         "*.pdf"
